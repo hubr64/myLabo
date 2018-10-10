@@ -155,6 +155,9 @@ export class ObjetDetailComponent implements OnInit, OnDestroy {
     this.dangers_chips.setValue(null);
     console.dir("selected",this.dangers);
   }
+  addOnBlur(): void {
+
+  }
   addDanger(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;

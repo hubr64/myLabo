@@ -26,7 +26,7 @@ export class FicheDetailComponent implements OnInit, OnDestroy {
 
   @Input() fiche: Fiche;
 
-  private categories : Categorie[];
+  categories : Categorie[];
   private ajoutObjetProfesseur : boolean = false;
   private ajoutObjetEleve : boolean = false;
   private subscription: Subscription;

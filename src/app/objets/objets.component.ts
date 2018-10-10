@@ -29,6 +29,7 @@ export class ObjetsComponent implements OnInit, OnDestroy {
   private _categorie: Categorie;
   private subscription: Subscription;
   currentUser: User;
+  displayactions: boolean = false;
 
   @Input()
   set categorie(value: Categorie) {

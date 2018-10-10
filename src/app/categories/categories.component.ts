@@ -21,6 +21,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   selectedCategorie: Categorie;
   private subscription: Subscription;
   private currentUser: User;
+  displayactions: boolean = false;
 
   isLoading:boolean = false;
   displayedColumns: string[] = ['icone', 'nom','actions'];
