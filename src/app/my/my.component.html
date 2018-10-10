@@ -1,0 +1,5 @@
+<button *ngIf="currentUser" mat-button [matMenuTriggerFor]="my"><mat-icon>home</mat-icon> Mon compte</button>
+<mat-menu #my="matMenu" yPosition="above" [overlapTrigger]="false">
+  <button mat-menu-item disabled><mat-icon>face</mat-icon> {{currentUser?.nom}}</button>
+  <button mat-menu-item routerLink="/login"><mat-icon>lock_open</mat-icon> Déconnexion</button>
+</mat-menu>

@@ -1,0 +1,57 @@
+<section>
+
+<!-- <div [ngStyle]="{'display': display}" class="alert alert-warning" role="alert" *ngIf="users?.length == 0">
+    <button type="button" (click)="display='none'" class="close-alert">×</button>
+    <mat-icon>warning</mat-icon>
+    <span>Aucun utilisateur n'est enregistré !</span>
+  </div> -->
+  <mat-progress-bar mode="query" *ngIf="isLoading"></mat-progress-bar>
+
+  <div>
+    <mat-form-field class="filter-form">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="nom" matSortDirection="asc">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let user"> {{user._id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+          <td mat-cell *matCellDef="let user"> <span [matBadge]="user._id == currentUser._id?'U':''" matBadgeOverlap="false">{{user.nom}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="profil">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Profil </th>
+          <td mat-cell *matCellDef="let user">{{user.profil}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let user">
+              <button [disabled]="(user._id == currentUser._id)?'':null" mat-button color="warn" (click)="delete(user)"><mat-icon>delete</mat-icon> Supprimer</button>
+              <button [disabled]="(user._id == currentUser._id || user.profil == userProfilAdmin)?'':null" mat-button color="primary" (click)="changeUserProfil(user,userProfilAdmin)">Administrateur</button>
+              <button [disabled]="(user._id == currentUser._id || user.profil == userProfilUser)?'':null" mat-button color="primary" (click)="changeUserProfil(user,userProfilUser)">Utilisateur</button>
+              <button [disabled]="(user._id == currentUser._id || user.profil == userProfilRead)?'':null" mat-button color="primary" (click)="changeUserProfil(user,userProfilRead)">Lecture seule</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[20, 40, 60]" [pageIndex]="0" [pageSize]="20" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</section>

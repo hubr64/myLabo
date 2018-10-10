@@ -1,0 +1,4 @@
+_id;designation;categorie;quantite;unite;seuil_alerte;dangers;localisation;commentaire;reference;marque;prix
+;import1;Verrerie;10;ml;5;corrosion;Placard Laboratoire;No comment;JEUImport1;Jeulin;4,99
+;import2;ExAO;20;;10;inflammable;Sale ExAO;No comment;;;
+;import3;Verrerie;10;ml;5;explosif,inflammable;;;;;2

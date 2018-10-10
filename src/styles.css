@@ -1,0 +1,63 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body{
+padding: 0px;
+margin: 0;
+}
+
+.icon-danger {
+color: #dc3545 ;
+}
+.icon-warning {
+color: #ffc107;
+}
+.icon-success {
+color: #28a745;
+}
+
+.minus-button,.plus-button{
+border: none;
+height: 30px;
+width: 20px;
+color: white;
+font-weight: bold;
+}
+.minus-button{
+background-color: #dc3545 ;
+border-radius: 2px 0 0 2px;
+}
+.plus-button{
+background-color: #28a745 ;
+border-radius: 0 2px 2px 0;
+}
+
+.button-group{
+margin:10px 0;
+}
+.button-group>button{
+border-radius: 0;
+}
+.button-group>button:first-child{
+border-top-left-radius: 3px;
+border-bottom-left-radius: 3px;
+}
+.button-group>button:last-child{
+border-top-right-radius: 3px;
+border-bottom-right-radius: 3px;
+}
+
+.fab-button-group{
+  position: fixed;
+  bottom: 10px;
+  right: 5px;
+  height:90px;
+  overflow:hidden;
+  transition: width 1s ease-in-out;
+  text-align:right;
+  padding: 0px 10px;
+}
+
+
+.fab-button-group>button{
+  margin:20px 5px;
+}

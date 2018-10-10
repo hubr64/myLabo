@@ -1,0 +1,16 @@
+section,h1{
+  margin:10px auto;
+  width:90%;
+}
+h1{
+  margin-top:15px;
+}
+
+section .mat-form-field  {
+  width: 100%;
+  margin:5px 0;
+}
+section .mat-form-field.not-full{
+  width:auto;
+  margin:5px;
+}

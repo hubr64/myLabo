@@ -1,0 +1,59 @@
+<section>
+
+<!-- <div [ngStyle]="{'display': display}" class="alert alert-warning" role="alert" *ngIf="fiches?.length == 0">
+    <button type="button" (click)="display='none'" class="close-alert">×</button>
+    <mat-icon>warning</mat-icon>
+    <span>Aucune fiche enregistrée !</span>
+  </div> -->
+  <mat-progress-bar mode="query" *ngIf="isLoading"></mat-progress-bar>
+
+  <div>
+    <mat-form-field class="filter-form">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="nom" matSortDirection="asc">
+
+        <ng-container matColumnDef="icone">
+          <th mat-header-cell *matHeaderCellDef> Icône </th>
+          <td mat-cell *matCellDef="let fiche"> <img height="30" src="./assets/categories/{{fiche.categorie}}_" alt=""> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+          <td mat-cell *matCellDef="let fiche">{{fiche.nom}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="objets_professeur">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Objets Professeur </th>
+          <td mat-cell *matCellDef="let fiche">{{fiche.objets_professeur?.length}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="objets_eleve">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Objets Elèves </th>
+          <td mat-cell *matCellDef="let fiche">{{fiche.objets_eleve?.length}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let fiche">
+              <button *ngIf="currentUser" mat-button color="primary" (click)="edit(fiche)"><mat-icon>edit</mat-icon> Modifier</button>
+              <button *ngIf="currentUser.profil == 'ADMIN'" mat-button color="warn" (click)="delete(fiche)"><mat-icon>delete</mat-icon> Supprimer</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+      <mat-paginator [pageSizeOptions]="[20, 40, 60]" [pageIndex]="0" [pageSize]="20" showFirstLastButtons></mat-paginator>
+
+    </div>
+  </div>
+
+  <button mat-fab color="primary" (click)="add()" *ngIf="standaloneList && currentUser.profil == 'ADMIN'" ><mat-icon>add</mat-icon></button>
+
+</section>

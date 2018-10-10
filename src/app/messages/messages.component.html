@@ -1,0 +1,8 @@
+<section *ngIf="display && messageService.messages.length">
+
+  <h2><mat-icon>info</mat-icon>Messages<button mat-mini-fab  type="button" (click)="messageService.clear()"><mat-icon>clear</mat-icon></button></h2>
+  <div>
+    <div *ngFor='let message of messageService.messages'><span>{{message.time| date:'hh:mm:ss'}}</span><span>{{message.message}}</span></div>
+  </div>
+
+</section>

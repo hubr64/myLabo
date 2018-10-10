@@ -1,0 +1,40 @@
+section{
+margin:10px auto;
+width:90%;
+}
+section .mat-form-field  {
+width: 100%;
+margin:5px 0;
+}
+section .mat-form-field.not-full{
+width:auto;
+margin:5px;
+}
+.mat-list-item {
+margin-top:5px;
+}
+.mat-tab-body{
+
+padding: 5px;
+}
+.mat-mini-fab{
+margin-bottom: 5px;
+}
+.ficheobjet{
+  width:100%;
+}
+.ficheobjet td:nth-child(1){
+  width:50px;
+}
+.ficheobjet td:nth-child(2){
+  width:20%;
+}
+.ficheobjet td:nth-child(3){
+  width:20%;
+}
+.ficheobjet td:nth-child(4){
+  width:30%;
+}
+.ficheobjet td:nth-child(5){
+
+}

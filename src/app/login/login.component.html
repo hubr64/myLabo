@@ -1,0 +1,27 @@
+<section>
+
+    <img height="100" src="./assets/myLaboColor.svg" alt="">
+    <h2> Connexion </h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="Votre e-mail" type="email" formControlName="email" id="email" required />
+            <mat-error *ngIf="f.email.errors && f.email.errors.required">L'email est obligatoire !</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" id="password" required />
+            <mat-error *ngIf="f.password.errors && f.password.errors.required">Le mot de passe est obligatoire !</mat-error>
+        </mat-form-field>
+
+
+        <div class="button-group">
+            <button mat-flat-button color="accent" type="submit" class="btn btn-primary" [disabled]="loading">Se connecter</button>
+            <button mat-flat-button type="button" [routerLink]="['/register']">S'enregistrer</button>
+        </div>
+
+        <mat-progress-bar mode="query" *ngIf="loading"></mat-progress-bar>
+
+    </form>
+
+</section>

@@ -1,0 +1,18 @@
+<section>
+  <button mat-fab color="warn" (click)="toggleAlerts()" *ngIf="currentUser && objets.length!=0" ><mat-icon>warning</mat-icon></button>
+
+   <mat-card *ngIf="display">
+      <mat-card-title>Objets en alerte <mat-icon (click)="toggleAlerts()">clear</mat-icon></mat-card-title>
+      <mat-card-subtitle *ngIf="objets?.length == 0">
+        Aucun objet en alerte ...
+      </mat-card-subtitle>
+      <mat-card-content>
+      <mat-nav-list dense>
+          <a mat-list-item *ngFor="let objet of objets" routerLink="/objet/{{objet._id}}">
+             <span class="critere-img"><img src="./assets/categories/{{objet.categorie}}_" alt=""></span> <span>{{objet.designation}} (Quantité restante : {{objet.quantite}}{{objet.unite}})</span>
+          </a>
+      </mat-nav-list>
+    </mat-card-content>
+    </mat-card>
+
+</section>

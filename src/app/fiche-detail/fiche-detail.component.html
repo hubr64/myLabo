@@ -1,0 +1,101 @@
+<section>
+    <form [formGroup]="ficheForm" (ngSubmit)="save()">
+    <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Nom" id="nom" formControlName="nom" required>
+        <mat-hint align="end">Nom de la fiche TP</mat-hint>
+        <mat-error *ngIf="nom.errors?.required">Le nom est obligatoire.</mat-error>
+        <mat-error *ngIf="nom.errors?.minlength">Le nom doit être d'au moins 10 caractères.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Catégorie</mat-label>
+        <mat-select placeholder="Catégorie" [compareWith]='compareCategories' formControlName="categorie" id="categorie" required>
+            <mat-option *ngFor="let c of categories" [value]="c">{{c.nom}}</mat-option>
+        </mat-select>
+        <mat-hint align="end">Catégorie détaillée de l'objet</mat-hint>
+        <mat-error *ngIf="categorie.errors?.required">La catégorie est obligatoire.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput id="description" formControlName="description" required></textarea>
+        <mat-hint align="end">Description rapide du TP</mat-hint>
+        <mat-error *ngIf="description.errors?.required">La description est obligatoire.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Protocole</mat-label>
+        <textarea matInput id="protocole" formControlName="protocole" required></textarea>
+        <mat-hint align="end">Protocole expérimental / Notice de préparation</mat-hint>
+        <mat-error *ngIf="protocole.errors?.required">Le protocole est obligatoire.</mat-error>
+    </mat-form-field>
+
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon svgIcon="ml-professeur"></mat-icon>&nbsp;
+                <span matBadge="{{fiche?.objets_professeur?.length}}" matBadgeOverlap="false">Objets Professeur</span>
+            </ng-template>
+            <mat-list>
+                <mat-list-item *ngIf="fiche?.objets_professeur == null || fiche?.objets_professeur?.length == 0">Aucun objet professeur enregistré</mat-list-item>
+                <mat-list-item *ngFor="let ficheobjet of fiche?.objets_professeur; let in = index; trackBy: trackByFicheobjet">
+                    <table class="ficheobjet">
+                        <tr>
+                        <td><img height="30" src="./assets/categories/{{ficheobjet.objet.categorie}}_" alt=""></td>
+                        <td><span>{{ficheobjet.objet.designation}}</span></td>
+                        <td><mat-form-field>
+                        <mat-label>Quantité</mat-label>
+                        <input matInput formControlName="ficheobjet.professeur.quantite-{{ficheobjet._id}}" id="ficheobjet.professeur.quantite-{{ficheobjet._id}}" required/>
+                        <span matSuffix>{{ficheobjet.objet.unite}}</span>
+                        </mat-form-field></td>
+                        <td><mat-form-field>
+                        <mat-label>Commentaire</mat-label>
+                        <input matInput formControlName="ficheobjet.professeur.commentaire-{{ficheobjet._id}}" id="ficheobjet.professeur.commentaire-{{ficheobjet._id}}" />
+                        </mat-form-field></td>
+                        <td><button mat-flat-button color="accent" type="button" (click)="retirerObjet('professeur',ficheobjet)">Retirer</button></td>
+                        </tr>
+                    </table>
+                </mat-list-item>
+            </mat-list>
+            <div>
+                <button type="button" mat-flat-button (click)="ajouterObjet('professeur')"><mat-icon>add</mat-icon> Ajouter un objet Professeur</button>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon svgIcon="ml-eleve"></mat-icon>&nbsp;
+                <span matBadge="{{fiche?.objets_eleve?.length}}" matBadgeOverlap="false">Objets Elève</span>
+            </ng-template>
+            <mat-list>
+                <mat-list-item *ngIf="fiche?.objets_eleve == null || fiche?.objets_eleve?.length == 0">Aucun objet élève enregistré</mat-list-item>
+                <mat-list-item *ngFor="let ficheobjet of fiche?.objets_eleve; let in = index; trackBy: trackByFicheobjet">
+                    <table class="ficheobjet">
+                        <tr>
+                        <td><img height="30" src="./assets/categories/{{ficheobjet.objet.categorie}}_" alt=""></td>
+                        <td><span>{{ficheobjet.objet.designation}}</span></td>
+                        <td><mat-form-field class="not-full">
+                        <td><mat-label>Quantité</mat-label>
+                        <input matInput formControlName="ficheobjet.eleve.quantite-{{ficheobjet._id}}" id="ficheobjet.eleve.quantite-{{ficheobjet._id}}" required/>
+                        <span matSuffix>{{ficheobjet.objet.unite}}</span>
+                        </mat-form-field></td>
+                        <td><mat-form-field class="not-full">
+                        <mat-label>Commentaire</mat-label>
+                        <input matInput formControlName="ficheobjet.eleve.commentaire-{{ficheobjet._id}}" id="ficheobjet.eleve.commentaire-{{ficheobjet._id}}" />
+                        </mat-form-field></td>
+                        <td><button mat-flat-button color="accent" type="button" (click)="retirerObjet('eleve',ficheobjet)">Retirer</button></td>
+                        </tr>
+                    </table>
+                </mat-list-item>
+            </mat-list>
+            <div>
+                <button type="button" mat-flat-button  (click)="ajouterObjet('eleve')"><mat-icon>add</mat-icon> Ajouter un objet élève</button>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
+
+    <div class="button-group">
+        <button mat-flat-button color="accent" type="submit" [disabled]="!ficheForm.valid">Enregistrer</button>
+        <button mat-flat-button type="button" (click)="goBack()">Retour</button>
+    </div>
+    </form>
+
+</section>

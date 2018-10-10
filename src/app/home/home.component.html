@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row >
+    <mat-icon svgIcon="ml-logo"></mat-icon><h1 class="toolbar-titre mat-title">myLabo</h1>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="router.url!='/login'">
+    <a mat-button [disabled]="router.url=='/browse' ? '' : null" routerLink="/browse"><mat-icon>ballot</mat-icon> Parcourir</a>
+    <a mat-button [disabled]="router.url=='/categories' ? '' : null" routerLink="/categories"><mat-icon>category</mat-icon> Catégories</a>
+    <button mat-button [matMenuTriggerFor]="objets"><mat-icon>group_work</mat-icon> Objets</button>
+    <mat-menu #objets="matMenu" yPosition="above" [overlapTrigger]="false">
+      <button mat-menu-item routerLink="/objets"><mat-icon>list</mat-icon> Liste des objets</button>
+      <button mat-menu-item routerLink="/objet/new"><mat-icon>add</mat-icon> Ajouter un nouvel objet</button>
+      <button mat-menu-item routerLink="/objets/import"><mat-icon>get_app</mat-icon> Importer en masse</button>
+    </mat-menu>
+    <a mat-button [disabled]="router.url=='/marques' ? '' : null" routerLink="/marques"><mat-icon>store</mat-icon> Fournisseurs</a>
+    <a mat-button [disabled]="router.url=='/fiches' ? '' : null" routerLink="/fiches"><mat-icon>description</mat-icon> Fiches</a>
+    <a mat-button [disabled]="router.url=='/users' ? '' : null" routerLink="/users"><mat-icon>group</mat-icon> Utilisateurs</a>
+    <app-my></app-my>
+    <app-cherche></app-cherche>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+<app-objets-alert></app-objets-alert>

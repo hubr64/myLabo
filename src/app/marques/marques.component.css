@@ -1,0 +1,15 @@
+section{
+  width:90%;
+  margin:10px auto;
+}
+.mat-form-field {
+  width: 100%;
+}
+table{
+  width:100%;
+}
+.mat-fab{
+position: fixed;
+bottom: 20px;
+right: 20px;
+}

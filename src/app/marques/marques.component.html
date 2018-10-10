@@ -1,0 +1,57 @@
+<section>
+
+<!-- <div [ngStyle]="{'display': display}" class="alert alert-warning" role="alert" *ngIf="marques?.length == 0">
+    <button type="button" (click)="display='none'" class="close-alert">×</button>
+    <mat-icon>warning</mat-icon>
+    <span>Aucun fournisseur n'est enregistré !</span>
+  </div> -->
+  <mat-progress-bar mode="query" *ngIf="isLoading"></mat-progress-bar>
+
+  <div>
+    <mat-form-field class="filter-form">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="nom" matSortDirection="asc">
+
+        <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+          <td mat-cell *matCellDef="let marque"> {{marque.nom}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telephone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone </th>
+          <td mat-cell *matCellDef="let marque"> {{marque.telephone}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail </th>
+          <td mat-cell *matCellDef="let marque"> {{marque.mail}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="web">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Web </th>
+          <td mat-cell *matCellDef="let marque"> <a href="{{marque.web}}" target="_blank">{{marque.web}}</a> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let marque">
+              <button *ngIf="currentUser" mat-button color="primary" (click)="edit(marque)"><mat-icon>edit</mat-icon> Modifier</button>
+              <button *ngIf="currentUser.profil == 'ADMIN'" mat-button color="warn" (click)="delete(marque)"><mat-icon>delete</mat-icon> Supprimer</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[20, 40, 60]" [pageIndex]="0" [pageSize]="20" showFirstLastButtons></mat-paginator>
+
+    </div>
+  </div>
+  <button mat-fab color="primary" (click)="add()"><mat-icon>add</mat-icon></button>
+</section>

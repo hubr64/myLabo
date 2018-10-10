@@ -1,0 +1,113 @@
+<section>
+    <form [formGroup]="objetForm" (ngSubmit)="save()">
+    <mat-form-field>
+        <mat-label>Désignation</mat-label>
+        <input matInput placeholder="Désignation" id="designation" formControlName="designation" required>
+        <mat-hint align="end">Désignation de l'objet</mat-hint>
+        <mat-error *ngIf="designation.errors?.required">La désignation est obligatoire.</mat-error>
+        <mat-error *ngIf="designation.errors?.minlength">La désignation doit être d'au moins 10 caractères.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Catégorie</mat-label>
+        <mat-select placeholder="Catégorie" [compareWith]='compareCategories' formControlName="categorie" id="categorie" required>
+            <mat-option *ngFor="let c of categories" [value]="c">{{c.nom}}</mat-option>
+        </mat-select>
+        <mat-hint align="end">Catégorie détaillée de l'objet</mat-hint>
+        <mat-error *ngIf="categorie.errors?.required">La catégorie est obligatoire.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="not-full">
+        <mat-label>Quantité</mat-label>
+        <input matInput placeholder="Quantité" id="quantite" formControlName="quantite" required>
+        <mat-hint align="end">Quantité disponible en stock</mat-hint>
+        <mat-error *ngIf="quantite.errors?.required">La quantité est obligatoire.</mat-error>
+        <mat-error *ngIf="quantite.errors?.pattern">La quantité doit être un nombre.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="not-full">
+        <mat-label>Unité</mat-label>
+        <input matInput placeholder="Unité" id="unite" formControlName="unite">
+        <mat-hint align="end">Unité optionelle</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="not-full">
+        <mat-label>Seuil</mat-label>
+        <input matInput placeholder="Seuil d'alerte" id="seuil_alerte" formControlName="seuil_alerte">
+        <span matSuffix>{{unite?.value}}</span>
+        <mat-hint align="end">Seuil minimum optionnel pour alerter</mat-hint>
+        <mat-error *ngIf="seuil_alerte.errors?.pattern">Le seuil doit être un nombre.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list #chipList>
+        <ng-container *ngIf="dangers.value!=''">
+            <mat-chip
+              *ngFor="let danger of dangers.value.split(','); let i = index;"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="removeDanger(danger)">
+              <img height="50" src="./assets/dangers/{{globalDangersByLogo[danger].logo}}.png" title="{{globalDangersByLogo[danger].description}}">{{globalDangersByLogo[danger].titre}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </ng-container>
+        <input
+          placeholder="Dangers de l'objet..."
+          #dangerInput
+          [formControl]="dangers_chips"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addDanger($event)">
+          <mat-hint align="end">Ensemble des dangers de l'objet (selon FSD)</mat-hint>
+      </mat-chip-list>
+
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedDanger($event)">
+        <mat-option *ngFor="let danger of globalDangers; let i = index;" [value]="danger.logo">
+          {{danger.titre}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Localisation</mat-label>
+        <input matInput placeholder="Localisation" id="localisation" formControlName="localisation" required>
+        <mat-hint align="end">Lieu de stockage de l'objet</mat-hint>
+        <mat-error *ngIf="localisation.errors?.required">La localisation est obligatoire.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Commentaire</mat-label>
+        <textarea matInput id="commentaire" formControlName="commentaire"></textarea>
+        <mat-hint align="end">Commentaires libres pour information</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="not-full">
+        <mat-label>Fournisseur</mat-label>
+        <mat-select placeholder="Fournisseur" [compareWith]='compareMarques' formControlName="marque" id="marque">
+            <mat-option *ngFor="let m of marques" [value]="m">{{m.nom}}</mat-option>
+        </mat-select>
+        <mat-hint align="end">Fournisseur/Marque</mat-hint>
+    </mat-form-field>
+     <mat-form-field class="not-full">
+        <mat-label>Référence</mat-label>
+        <input matInput placeholder="Référence fournisseur" id="reference" formControlName="reference">
+        <mat-hint align="end">Référence du fournisseur</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Prix</mat-label>
+        <input matInput placeholder="Prix" id="prix" formControlName="prix">
+        <span matSuffix>€uros</span>
+        <mat-hint align="end">Prix unitaire</mat-hint>
+        <mat-error *ngIf="prix.errors?.pattern">Le prix doit être un nombre (le séparateur est un point).</mat-error>
+    </mat-form-field>
+    <div class="button-group">
+        <button mat-flat-button color="accent" type="submit" [disabled]="!objetForm.valid">Enregistrer</button>
+        <button mat-flat-button type="button" (click)="goBack()">Retour</button>
+    </div>
+    </form>
+
+    <mat-tab-group *ngIf="objet">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>description</mat-icon>&nbsp;
+                <span matBadge="{{fichesCount}}" matBadgeOverlap="false">Fiches liées</span>
+            </ng-template>
+            <app-fiches [objet]="objet" (countFiche)="onFicheCount($event)"></app-fiches>
+        </mat-tab>
+    </mat-tab-group>
+
+</section>

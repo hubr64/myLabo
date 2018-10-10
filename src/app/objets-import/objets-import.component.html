@@ -1,0 +1,103 @@
+<section>
+
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Fichier
+        </mat-panel-title>
+        <mat-panel-description>
+          Choix du fichier d'import
+          <mat-icon>insert_drive_file</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div>
+        <p>Téléchargez le modèle de <a href="./assets/templates/import_objets.csv">fichier à importer</a> puis complétez-le.</p>
+        <p>Une fois le fichier complété, importez-le dans l'outil à l'étape suivante.</p>
+      </div>
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Chargement
+        </mat-panel-title>
+        <mat-panel-description>
+          Chargement des données
+          <mat-icon>cloud_download</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div>
+        <p>Choisissez le fichier en cliquant sur Parcourir. Une fois le fichier sélectionné, cliquez sur le bouton <b>Charger</b>.</p>
+        <p>Patientez le temps du chargement puis passez à l'étape suivante.</p>
+      </div>
+      <mat-divider></mat-divider>
+      <input style="display:none" id="input-file-id" type="file" (change)="updateFile($event)" accept=".csv"/>
+      <label for="input-file-id">{{importFileName}}</label>
+
+      <button mat-button color="primary" (click)="uploadFile()">Charger</button>
+      <mat-progress-bar mode="query" *ngIf="importProgress === 1"></mat-progress-bar>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Précédent</button>
+        <button mat-button color="primary" (click)="nextStep()" [disabled]="importProgress != 2">Suivant</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Import
+        </mat-panel-title>
+        <mat-panel-description>
+          Importation dans la base
+          <mat-icon>cloud_done</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div>
+        <p>Contrôlez l'analyse du fichier à importer proposée par l'outil.</p>
+        <p>Si l'analyse est conforme et si au moins un objet peut être importé, cliquez sur le bouton <strong>Importer</strong> sinon modifier le fichier et recommencez à l'étape 1.</p>
+      </div>
+
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            <span matBadge="{{importObjets.length}}" matBadgeOverlap="false">A importer</span>
+          </ng-template>
+          <mat-list role="list">
+              <mat-list-item *ngIf="importObjets?.length == 0">Aucun objet à importer !</mat-list-item>
+              <mat-list-item role="listitem" *ngFor="let importObjet of importObjets">{{importObjet.designation}}</mat-list-item>
+          </mat-list>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_down</mat-icon>
+             <span matBadge="{{importErrors.length}}" matBadgeOverlap="false" matBadgeColor="warn">En erreur</span>
+          </ng-template>
+          <div>
+          <mat-list role="list">
+              <mat-list-item role="listitem" *ngIf="importErrors?.length == 0">Aucun objet en erreur !</mat-list-item>
+              <mat-list-item role="listitem" *ngFor="let importError of importErrors">{{importError}}</mat-list-item>
+          </mat-list>
+        </div>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <mat-progress-bar mode="query" *ngIf="executeProgress === 1"></mat-progress-bar>
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Précédent</button>
+        <button mat-button color="primary" (click)="execute()" [disabled]="importObjets?.length == 0">Tout est OK ! Importer</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+</section>

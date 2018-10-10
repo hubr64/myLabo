@@ -1,0 +1,25 @@
+
+<div class="cherche">
+  <span>
+    <mat-form-field appearance="outline">
+      <mat-label>Votre recherche</mat-label><input matInput [(ngModel)]="criteres" (keyup)="onKey()">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-card *ngIf="criteres != ''">
+      <mat-card-title>Résultats de la recherche <mat-icon (click)="clear()">clear</mat-icon></mat-card-title>
+      <mat-card-subtitle *ngIf="resultats?.length == 0 &&  criteres != ''">
+        Aucun résultat pour '<i>{{criteres}}</i>'...
+        <button mat-button color="primary" routerLink="/objet/new">Ajouter un objet ?</button>
+      </mat-card-subtitle>
+      <mat-card-content>
+      <mat-nav-list dense >
+          <a mat-list-item *ngFor="let resultat of resultats" routerLink="/{{resultat.type}}/{{resultat._id}}">
+             <span class="critere-img"><img src="./assets/categories/{{resultat.img}}_" alt="{{resultat.type| titlecase}}"></span> <span>{{resultat.titre}}</span>
+          </a>
+      </mat-nav-list>
+    </mat-card-content>
+    </mat-card>
+  </span>
+</div>
+

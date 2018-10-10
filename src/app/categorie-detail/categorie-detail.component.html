@@ -1,0 +1,41 @@
+<section>
+    <form [formGroup]="categorieForm" (ngSubmit)="save()">
+        <mat-form-field>
+            <mat-label>Nom</mat-label>
+            <input matInput placeholder="Nom" id="nom" formControlName="nom" required>
+            <mat-hint align="end">Nom de la catégorie</mat-hint>
+            <mat-error *ngIf="nom.errors?.required">Le nom est obligatoire.</mat-error>
+            <mat-error *ngIf="nom.errors?.minlength">Le nom doit être d'au moins 5 caractères.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Mère</mat-label>
+            <mat-select placeholder="Catégorie mère" [compareWith]='compareCategories' formControlName="parent" id="parent">
+                <mat-option *ngFor="let c of categories" [value]="c" [disabled]="c._id==categorie?._id">{{c.nom}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Catégorie chapeau de la catégorie actuelle</mat-hint>
+        </mat-form-field>
+        <img *ngIf="categorie"height="50" src="/assets/categories/{{categorie._id}}_" alt="">
+        <div class="button-group">
+            <button mat-flat-button color="accent" type="submit" [disabled]="!categorieForm.valid">Enregistrer</button>
+            <button mat-flat-button type="button" (click)="goBack()">Retour</button>
+        </div>
+    </form>
+
+    <mat-tab-group *ngIf="categorie">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>group_work</mat-icon>&nbsp;
+                <span matBadge="{{objetsCount}}" matBadgeOverlap="false">Objets liés</span>
+            </ng-template>
+            <app-objets [categorie]="categorie" (countObjet)="onObjetCount($event)"></app-objets>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>description</mat-icon>&nbsp;
+                <span matBadge="{{fichesCount}}" matBadgeOverlap="false">Fiches liées</span>
+            </ng-template>
+            <app-fiches [categorie]="categorie" (countFiche)="onFicheCount($event)"></app-fiches>
+        </mat-tab>
+    </mat-tab-group>
+
+</section>

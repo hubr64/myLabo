@@ -1,0 +1,51 @@
+<section>
+    <form [formGroup]="marqueForm" (ngSubmit)="save()">
+    <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Nom" id="nom" formControlName="nom" required>
+        <mat-hint align="end">Nom de la marque</mat-hint>
+        <mat-error *ngIf="nom.errors?.required">Le nom est obligatoire.</mat-error>
+        <mat-error *ngIf="nom.errors?.minlength">Le nom doit être d'au moins 3 caractères.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Téléphone</mat-label>
+        <input type="tel" matInput placeholder="Téléphone" id="telephone" formControlName="telephone" required>
+        <mat-hint align="end">Numéro de téléphone (au format 0559121212)</mat-hint>
+        <mat-error *ngIf="telephone.errors?.required">Le téléphone est obligatoire.</mat-error>
+        <mat-error *ngIf="telephone.errors?.pattern">Le téléphone doit être composé de 10 chiffres.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Mail</mat-label>
+        <input type="email" matInput placeholder="E-Mail" id="mail" formControlName="mail" required>
+        <mat-hint align="end">Email de contact (au format nom@societe.com)</mat-hint>
+        <mat-error *ngIf="mail.errors?.required">Le mail est obligatoire.</mat-error>
+        <mat-error *ngIf="mail.errors?.pattern">Le mail n'est pas au bon format.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Site Web</mat-label>
+        <input type="url" matInput placeholder="http://www.page.com" id="web" formControlName="web">
+        <mat-hint align="end">Site web</mat-hint>
+        <mat-error *ngIf="web.errors?.pattern">Le site web n'est pas au bon format.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Adresse</mat-label>
+        <textarea matInput id="adresse" formControlName="adresse"></textarea>
+        <mat-hint align="end">Adresse postale</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Commentaires</mat-label>
+        <textarea matInput id="commentaire" formControlName="commentaire"></textarea>
+        <mat-hint align="end">Commentaires libres pour information</mat-hint>
+    </mat-form-field>
+
+    <div class="button-group">
+        <button mat-flat-button color="accent" type="submit" [disabled]="!marqueForm.valid">Enregistrer</button>
+        <button mat-flat-button type="button" (click)="goBack()">Retour</button>
+    </div>
+    </form>
+
+    <mat-tab-group *ngIf="marque">
+        <mat-tab label="Objets liés"><app-objets [marque]="marque"></app-objets></mat-tab>
+    </mat-tab-group>
+
+</section>

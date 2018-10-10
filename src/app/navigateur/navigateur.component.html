@@ -1,0 +1,31 @@
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item" (click)="onSelectBack(null,-1)"><a href="javascript:void(0)">Accueil</a></li>
+    <li class="breadcrumb-item active" *ngFor="let browsedCategorie of browsedCategories; let i=index; let isLast=last" (click)="onSelectBack(browsedCategorie,i)"><a [ngClass]="{'active': isLast}" [attr.href]="isLast ? null : 'javascript:void(0)'">{{browsedCategorie.nom}}</a></li>
+  </ul>
+
+  <section>
+    <mat-card  (click)="onSelect(categorie)" *ngFor="let categorie of categories | categorieFilter:selectedCategorieParent let i=index;">
+      <img *ngIf="!reduceMode" mat-card-image src="assets/categories/{{categorie._id}}" alt="">
+      <div class="card-logo"><img src="assets/categories/{{categorie._id}}_" alt=""></div>
+      <mat-card-title [style.font-size.em]="reduceMode ? 1.2 : ''" class="mat-subheading-2">
+      <span [matBadge]="categoriesObjetCnt[categorie._id]" matBadgeOverlap="false">{{categorie.nom}}</span>
+    </mat-card-title>
+    </mat-card>
+  </section>
+
+<mat-tab-group *ngIf="selectedCategorieParent">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>group_work</mat-icon>&nbsp;
+            <span matBadge="{{objetsCount}}" matBadgeOverlap="false">Objets liés</span>
+        </ng-template>
+        <app-objets [categorie]="selectedCategorieParent" (selectedObjet)="onObjetSelect($event)" (countObjet)="onObjetCount($event)"></app-objets>
+    </mat-tab>
+    <mat-tab *ngIf="!reduceMode" >
+        <ng-template mat-tab-label>
+            <mat-icon>description</mat-icon>&nbsp;
+            <span matBadge="{{fichesCount}}" matBadgeOverlap="false">Fiches liées</span>
+        </ng-template>
+        <app-fiches [categorie]="selectedCategorieParent" (countFiche)="onFicheCount($event)"></app-fiches>
+    </mat-tab>
+</mat-tab-group>

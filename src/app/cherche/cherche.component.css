@@ -1,0 +1,31 @@
+div.cherche{
+position:absolute;
+right:5px;
+top: 0;
+}
+div.cherche>span{
+position:relative;
+}
+.mat-form-field{
+font-size: 0.6em;
+padding-top: 5px;
+}
+.mat-card{
+position: absolute;
+top: 40px;
+right: 15px;
+z-index: 100;
+min-width: 350px;
+}
+.mat-card-title > mat-icon{
+  cursor:pointer;
+}
+span.critere-img{
+height: 20px;
+display: inline-block;
+font-size: 0.5em;
+margin-right: 5px;
+}
+span.critere-img img{
+height:100%;
+}

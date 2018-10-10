@@ -1,0 +1,20 @@
+section{
+width:90%;
+margin:10px auto;
+}
+.mat-form-field.filter-form {
+width: 100%;
+}
+.mat-form-field.objet-form {
+width: 70px;
+text-align: right;
+}
+table{
+width:100%;
+}
+.mat-form-field-wrapper{
+padding-bottom:0!important;
+}
+.mat-form-field-appearance-outline{
+padding:0;
+}
