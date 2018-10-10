@@ -201,8 +201,8 @@ export class ObjetsImportComponent implements OnInit, OnDestroy {
           var dangersArr = importObject[dangersPosition].split(",");
           var dangerPb = false;
           for(let danger of dangersArr){
-            dangerArr = this.globalDangers.find(function (obj) { return obj.logo === danger; });
-            if(dangerArr === undefined){
+            var dangerItem = this.globalDangers.find(function (obj) { return obj.logo === danger; });
+            if(dangerItem === undefined){
               dangerPb = true;
             }
           }
