@@ -76,7 +76,7 @@ router.get('/count', UserController.loginRequired, function (req, res) {
 });
 
 router.get('/alert', UserController.loginRequired, function (req, res) {
-    Objet.find({ $where : "this.quantite < this.seuil_alerte " }, function (err, objets) {
+    Objet.find({$expr:{$lt:["$quantite", "$seuil_alerte"]}}, function (err, objets) {
         if (err) {
             console.error("Impossible de récupérer la liste des objets en alerte." + err);
             return res.status(500).send("Impossible de récupérer la liste des objets en alerte.");
