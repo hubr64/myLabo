@@ -1,6 +1,3 @@
-#!/usr/bin/env node
-
-// server.js
 var app = require('./app');
 var port = process.env.PORT || 8080;
 

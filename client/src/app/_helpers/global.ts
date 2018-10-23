@@ -9,7 +9,7 @@ export const userProfilAdmin = 'ADMIN';
 export const userProfilUser = 'USER';
 export const userProfilRead = 'READONLY';
 
-export const serverURL = 'http://localhost:8080';
+export const serverURL = 'http://mylabo.home:8080';
 export const requestRefreshTimer = 1000 * 60 * 5; //5 minutes
 
 export const activeScreenDebugMessage = false;
